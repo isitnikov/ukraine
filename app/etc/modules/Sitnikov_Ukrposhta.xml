@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sitnikov_Ukraine>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Shipping />
+                <Sitnikov_Directory />
+            </depends>
+        </Sitnikov_Ukraine>
+    </modules>
+</config>

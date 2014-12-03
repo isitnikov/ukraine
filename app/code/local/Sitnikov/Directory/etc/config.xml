@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sitnikov_Directory>
+            <version>1.0.0.1</version>
+        </Sitnikov_Directory>
+    </modules>
+    <global>
+        <resources>
+            <sitnikov_directory_setup>
+                <setup>
+                    <module>Sitnikov_Directory</module>
+                </setup>
+            </sitnikov_directory_setup>
+        </resources>
+    </global>
+</config>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sitnikov_Directory>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Directory />
+            </depends>
+        </Sitnikov_Directory>
+    </modules>
+</config>
