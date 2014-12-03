@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <carriers>
+            <groups>
+                <ukrposhta translate="label" module="usa">
+                    <label>Укрпошта</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>130</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled for Checkout</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>30</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+                        <showmethod translate="label">
+                            <label>Show Method if Not Applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>31</sort_order>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </showmethod>
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>32</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                        <allowed_methods translate="label">
+                            <label>Allowed Methods</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>ukraine/shipping_carrier_ukrposhta_source_method</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </allowed_methods>
+                        <shipment_type translate="label">
+                            <label>Shipment Types</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>ukraine/shipping_carrier_ukrposhta_source_shipmenttype</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </shipment_type>
+                        <payer translate="label">
+                            <label>Payer</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ukraine/shipping_carrier_ukrposhta_source_payer</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </payer>
+                        <sender_kind translate="label">
+                            <label>Sender Kind</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ukraine/shipping_carrier_ukrposhta_source_senderkind</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </sender_kind>
+                        <transfer_type translate="label">
+                            <label>Transfer Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ukraine/shipping_carrier_ukrposhta_source_transfertype</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </transfer_type>
+                        <courier translate="label">
+                            <label>Courier</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>ukraine/shipping_carrier_ukrposhta_source_courier</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </courier>
+                        <declared_percent translate="label">
+                            <label>Declared Percent (%)</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </declared_percent>
+                        <relative_extra_charge translate="label">
+                            <label>Relative Extra Charge (%)</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </relative_extra_charge>
+                        <absolute_extra_charge translate="label">
+                            <label>Absolute Extra Charge (base currency)</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number validate-zero-or-greater</validate>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </absolute_extra_charge>
+                        <calc_api_url translate="label">
+                            <label>Calculation Gateway Url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>130</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </calc_api_url>
+                        <default_length translate="label">
+                            <label>Default Package Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>140</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_length>
+                        <default_width translate="label">
+                            <label>Default Package Width</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>150</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_width>
+                        <default_height translate="label">
+                            <label>Default Package Height</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>160</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </default_height>
+                        <withHanding translate="label">
+                            <label>Delivery notification (SMS)</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>170</sort_order>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </withHanding>
+                        <packing translate="label">
+                            <label>Needed packing</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>180</sort_order>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </packing>
+                        <withF103 translate="label">
+                            <label>With App. 103</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>190</sort_order>
+                            <frontend_class>shipping-skip-hide</frontend_class>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </withF103>
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_order>
+                        <debug translate="label">
+                            <label>Debug</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </debug>
+                    </fields>
+                </ukrposhta>
+            </groups>
+        </carriers>
+    </sections>
+</config>
