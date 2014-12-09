@@ -193,10 +193,6 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
         $result = Mage::getModel('shipping/rate_result');
 
         foreach ($possibleMethods as $methodCode => $config) {
-//
-//            if ($methodCode == 'W_D') {
-//                $e = 1;
-//            }
             $methodFields = $config['fields'];
 
             if ($requestFields['direction'] == self::DIRECTION_FOREIGN_COUNTRIES
@@ -214,6 +210,11 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
             $request = array_replace($requestFields, $methodFields);
             $price = $this->_getQuote($request);
 
+            if (!$price) {
+                continue;
+            }
+            $price = $this->_getPrice($price);
+
             /** @var $method Mage_Shipping_Model_Rate_Result_Method */
             $method = Mage::getModel('shipping/rate_result_method');
             $method->setCarrier($this->_code)
@@ -228,6 +229,20 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
 
         return $result;
     }
+
+    protected function _getPrice($price)
+    {
+        $relativeCharge = (int) $this->getConfigData('relative_extra_charge');
+        $absoluteCharge = (float) $this->getConfigData('absolute_extra_charge');
+        $rate           = (float) $this->getConfigData('rate');
+
+        $price = $price * $rate;
+        $price += ($price * $relativeCharge / 100);
+        $price += $absoluteCharge;
+
+        return Mage::app()->getStore()->roundPrice($price);
+    }
+
 
     protected function _getQuote($fields)
     {

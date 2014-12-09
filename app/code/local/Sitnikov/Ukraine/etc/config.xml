@@ -32,6 +32,11 @@
                 </setup>
             </ukraine_setup>
         </resources>
+        <blocks>
+            <ukraine>
+                <class>Sitnikov_Ukraine_Block</class>
+            </ukraine>
+        </blocks>
     </global>
     <!--<adminhtml>-->
         <!--<translate>-->
@@ -45,6 +50,15 @@
         <!--</translate>-->
     <!--</adminhtml>-->
     <frontend>
+        <routers>
+            <ukraine>
+                <use>standard</use>
+                <args>
+                    <module>Sitnikov_Ukraine</module>
+                    <frontName>ukraine</frontName>
+                </args>
+            </ukraine>
+        </routers>
         <translate>
             <modules>
                 <Sitnikov_Ukraine>
@@ -90,6 +104,7 @@
                 <debug>0</debug>
                 <courier>Zabir</courier>
                 <declared_percent>0</declared_percent>
+                <rate>1</rate>
                 <relative_extra_charge>0</relative_extra_charge>
                 <absolute_extra_charge>0</absolute_extra_charge>
                 <showmethod>0</showmethod>
