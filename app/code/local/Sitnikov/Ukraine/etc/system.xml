@@ -129,7 +129,7 @@
                         <declared_percent translate="label">
                             <label>Declared Percent (%)</label>
                             <frontend_type>text</frontend_type>
-                            <validate>validate-number validate-zero-or-greater</validate>
+                            <validate>validate-percents validate-zero-or-greater</validate>
                             <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -138,7 +138,7 @@
                         <relative_extra_charge translate="label">
                             <label>Relative Extra Charge (%)</label>
                             <frontend_type>text</frontend_type>
-                            <validate>validate-number validate-zero-or-greater</validate>
+                            <validate>validate-percents validate-zero-or-greater</validate>
                             <sort_order>110</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
@@ -151,8 +151,26 @@
                             <sort_order>120</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
+                            <show_in_store>0</show_in_store>
                         </absolute_extra_charge>
+                        <rate translate="label">
+                            <label>Rate to UAH (for current website)</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-number validate-greater-than-zero</validate>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </rate>
+                        <rate_info translate="button_label sandbox_button_label">
+                            <label></label>
+                            <button_label>Show UAH to USD by Ukrposhta</button_label>
+                            <button_url><![CDATA[http://services.ukrposhta.com/CalcUtil/Course.aspx]]></button_url>
+                            <frontend_model>ukraine/adminhtml_system_config_ukrposhta_rate</frontend_model>
+                            <sort_order>125</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </rate_info>
                         <calc_api_url translate="label">
                             <label>Calculation Gateway Url</label>
                             <frontend_type>text</frontend_type>
@@ -161,30 +179,30 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </calc_api_url>
-                        <default_length translate="label">
-                            <label>Default Package Length</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>140</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </default_length>
-                        <default_width translate="label">
-                            <label>Default Package Width</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>150</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </default_width>
-                        <default_height translate="label">
-                            <label>Default Package Height</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>160</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </default_height>
+                        <!--<default_length translate="label">-->
+                            <!--<label>Default Package Length</label>-->
+                            <!--<frontend_type>text</frontend_type>-->
+                            <!--<sort_order>140</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>0</show_in_store>-->
+                        <!--</default_length>-->
+                        <!--<default_width translate="label">-->
+                            <!--<label>Default Package Width</label>-->
+                            <!--<frontend_type>text</frontend_type>-->
+                            <!--<sort_order>150</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>0</show_in_store>-->
+                        <!--</default_width>-->
+                        <!--<default_height translate="label">-->
+                            <!--<label>Default Package Height</label>-->
+                            <!--<frontend_type>text</frontend_type>-->
+                            <!--<sort_order>160</sort_order>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<show_in_store>0</show_in_store>-->
+                        <!--</default_height>-->
                         <withHanding translate="label">
                             <label>Delivery notification (SMS)</label>
                             <frontend_type>select</frontend_type>
