@@ -56,51 +56,26 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
     const COURIER_FROM_DOOR_TO_DOOR   = 'Zabir_Arrived';
     const COURIER_TO_DOOR             = 'Arrived';
 
-    // declaredValue
-    // declaredValueCoin
-    // postPay
-    // postPayCoins
-    // mass
-    // massGramme
-
-    // marks
-
-    // withHanding      - c уведомлением о вручении
-    // isFragile        - хрупкая
-    // isBulky          - громоздкая
-    // handPersonally   - вручить лично
-    // withMessenger    - с посыльным
-
-    // packing  - упаковка
-    // withForm - заполнение сопроводительного бланка
-    // withAddress - заполнение адреса
-    // withF103 - заполнение списка Ф.103
-
-    /*
-     *
-     *
-     * , <input type=​"checkbox" id=​"packing" name=​"packing" onclick=​"marksChange()​;​">​,
-     * <input type=​"checkbox" id=​"withForm" name=​"withForm" onclick=​"marksChange()​;​" disabled>​,
-     * <input type=​"checkbox" id=​"withAddress" name=​"withAddress" onclick=​"marksChange()​;​" disabled>​,
-     * <input type=​"checkbox" id=​"withF103" name=​"withF103" onclick=​"marksChange()​;​">​,
-     * <input type=​"checkbox" id=​"region" name=​"region" onclick=​"regionChange()​;​">​,
-     * <input type=​"checkbox" id=​"book" name=​"book" onclick=​"bookChange()​;​">​]
-     *
-     *
-     */
-
-
     protected $_urls = array(
         'Rate' => ''
     );
 
     protected $_possibleMethods;
 
+    /**
+     * @return bool
+     */
     public function isTrackingAvailable()
     {
         return true;
     }
 
+    /**
+     * Check is it UKRAINE by alpha-2 code
+     *
+     * @param $countryId
+     * @return bool
+     */
     protected function _isUkraine($countryId)
     {
         switch ($countryId) {
@@ -123,10 +98,6 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
         if (!$this->getConfigFlag('active')) {
             return false;
         }
-
-        /**
-         * http://services.ukrposhta.com/CalcUtil/Calculate.aspx?
-         */
 
         $possibleMethods = $this->getPossibleMethods();
         if (!$possibleMethods) {
@@ -187,11 +158,12 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
         $requestFields['mass'] = ceil($request->getPackageWeight());
         $requestFields['massGramme'] = 0;
 
-        $declaredValue = ceil(($request->getPackageValue() * (int)$this->getConfigData('declared_percent')) / 100);
+        $declaredValue = $this->_getDeclaredValue($request->getPackageValue());
 
         /** @var $result Mage_Shipping_Model_Rate_Result */
         $result = Mage::getModel('shipping/rate_result');
 
+        $quotesFields = array();
         foreach ($possibleMethods as $methodCode => $config) {
             $methodFields = $config['fields'];
 
@@ -207,29 +179,39 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
                 $methodFields['declaredValue'] = $declaredValue;
             }
 
-            $request = array_replace($requestFields, $methodFields);
-            $price = $this->_getQuote($request);
+            $quotesFields[$methodCode] = array_replace($requestFields, $methodFields);
+        }
 
-            if (!$price) {
-                continue;
+        $prices = $this->_getQuotes($quotesFields);
+        if ($prices) {
+            foreach ($prices as $methodCode => $price) {
+                if (!$price) {
+                    continue;
+                }
+                $price = $this->_getPrice($price);
+
+                /** @var $method Mage_Shipping_Model_Rate_Result_Method */
+                $method = Mage::getModel('shipping/rate_result_method');
+                $method->setCarrier($this->_code)
+                    ->setCarrierTitle($this->getConfigData('name'))
+                    ->setMethod($methodCode)
+                    ->setMethodTitle($this->getCode('service', $methodCode))
+                    ->setPrice($price)
+                    ->setCost($price);
+
+                $result->append($method);
             }
-            $price = $this->_getPrice($price);
-
-            /** @var $method Mage_Shipping_Model_Rate_Result_Method */
-            $method = Mage::getModel('shipping/rate_result_method');
-            $method->setCarrier($this->_code)
-                ->setCarrierTitle($this->getConfigData('name'))
-                ->setMethod($methodCode)
-                ->setMethodTitle($config['title'])
-                ->setPrice($price)
-                ->setCost($price);
-
-            $result->append($method);
         }
 
         return $result;
     }
 
+    /**
+     * Get price of method
+     *
+     * @param $price
+     * @return float
+     */
     protected function _getPrice($price)
     {
         $relativeCharge = (int) $this->getConfigData('relative_extra_charge');
@@ -243,30 +225,66 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
         return Mage::app()->getStore()->roundPrice($price);
     }
 
-
-    protected function _getQuote($fields)
+    /**
+     * Get declared value
+     *
+     * @param $value
+     * @return float
+     */
+    protected function _getDeclaredValue($value)
     {
-        $apiUrl = $this->getConfigData('calc_api_url');
-        $client = new Varien_Http_Client();
-        $response = $client->setUri($apiUrl)
-            ->setParameterGet($fields)
-            ->setConfig(array('timeout' => 5))
-            ->request('GET');
+        $rate = 1 / (float)$this->getConfigData('rate');
+        return ceil(($value * $rate * (int)$this->getConfigData('declared_percent')) / 100);
+    }
 
-        $this->_debug(array(
-            'url' => $apiUrl,
-            'request' => $fields,
-            'response' => $response->getBody()
-        ));
-        if (!$response->getBody()) {
+    /**
+     * Get quotes list with prices
+     *
+     * @param $quotesFields
+     * @return array|false
+     */
+    protected function _getQuotes($quotesFields)
+    {
+        if (!$quotesFields) {
             return false;
         }
 
-        if (preg_match('/.*rightResultBold\"\>([0-9]+)\,([0-9]+)?.*\</', $response->getBody(), $matches)) {
-            return ("$matches[1]" . '.' . "$matches[2]");
+        $client  = new Varien_Http_Adapter_Curl();
+        $apiUrl  = $this->getConfigData('calc_api_url');
+        $options = array(
+            CURLOPT_USERAGENT      => 'Mozilla/5.0 (Magento)',
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_TIMEOUT        => 5
+        );
+
+        $urls = array();
+        foreach ($quotesFields as $method => $fields) {
+            $urls[$method] = $apiUrl . '?' . http_build_query($fields);
         }
 
-        return false;
+        $this->_debug($urls);
+
+        $result = $client->multiRequest($urls, $options);
+
+        $this->_debug($result);
+
+        array_walk($result, array($this, '_parsePrice'));
+
+        return $result;
+    }
+
+    /**
+     * Parse price (used as callable)
+     *
+     * @param $item
+     */
+    protected function _parsePrice(&$item)
+    {
+        if (preg_match('/.*rightResultBold\"\>([0-9]+)\,([0-9]+)?.*\</', $item, $matches)) {
+            $item = ("$matches[1]" . '.' . "$matches[2]");
+        } else {
+            $item = false;
+        }
     }
 
     /**
@@ -284,6 +302,11 @@ class Sitnikov_Ukraine_Model_Shipping_Carrier_Ukrposhta
         return $arr;
     }
 
+    /**
+     * Get possible methods
+     *
+     * @return mixed
+     */
     public function getPossibleMethods()
     {
         if (!$this->_possibleMethods) {
