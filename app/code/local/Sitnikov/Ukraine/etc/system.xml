@@ -12,7 +12,7 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <active translate="label">
-                            <label>Enabled for Checkout</label>
+                            <label>Включить?</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>10</sort_order>
@@ -21,35 +21,15 @@
                             <show_in_store>0</show_in_store>
                         </active>
                         <title translate="label">
-                            <label>Title</label>
+                            <label>Заголовок способа доставки для покупателя</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </title>
-                        <sallowspecific translate="label">
-                            <label>Ship to Applicable Countries</label>
-                            <frontend_type>select</frontend_type>
-                            <sort_order>20</sort_order>
-                            <frontend_class>shipping-applicable-country</frontend_class>
-                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </sallowspecific>
-                        <specificcountry translate="label">
-                            <label>Ship to Specific Countries</label>
-                            <frontend_type>multiselect</frontend_type>
-                            <sort_order>30</sort_order>
-                            <source_model>adminhtml/system_config_source_country</source_model>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>1</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <can_be_empty>1</can_be_empty>
-                        </specificcountry>
                         <showmethod translate="label">
-                            <label>Show Method if Not Applicable</label>
+                            <label>Показывать ли способ доставки, когда он по каким-либо причинам не применим к текущему заказу?</label>
                             <frontend_type>select</frontend_type>
                             <sort_order>31</sort_order>
                             <frontend_class>shipping-skip-hide</frontend_class>
@@ -59,15 +39,35 @@
                             <show_in_store>0</show_in_store>
                         </showmethod>
                         <specificerrmsg translate="label">
-                            <label>Displayed Error Message</label>
+                            <label>Сообщение, если метод не применим к текущему заказу</label>
                             <frontend_type>textarea</frontend_type>
                             <sort_order>32</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </specificerrmsg>
+                        <specificcountry translate="label">
+                            <label>Ограничить область доставки конкретными странами?</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>30</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+                        <sallowspecific translate="label">
+                            <label>Перечень стран, куда разрешена доставка данным способом</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
                         <allowed_methods translate="label">
-                            <label>Allowed Methods</label>
+                            <label>Список используемых методов</label>
                             <frontend_type>multiselect</frontend_type>
                             <source_model>ukraine/shipping_carrier_ukrposhta_source_method</source_model>
                             <sort_order>40</sort_order>
@@ -77,7 +77,7 @@
                             <can_be_empty>1</can_be_empty>
                         </allowed_methods>
                         <shipment_type translate="label">
-                            <label>Shipment Types</label>
+                            <label>Список типов доставки</label>
                             <frontend_type>multiselect</frontend_type>
                             <source_model>ukraine/shipping_carrier_ukrposhta_source_shipmenttype</source_model>
                             <sort_order>50</sort_order>
@@ -85,9 +85,10 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <can_be_empty>1</can_be_empty>
+                            <comment>Обратите внимание, что данный выбранные типы доставки ограничивают допустимые методы.</comment>
                         </shipment_type>
                         <payer translate="label">
-                            <label>Payer</label>
+                            <label>Кто платит за посылку?</label>
                             <frontend_type>select</frontend_type>
                             <source_model>ukraine/shipping_carrier_ukrposhta_source_payer</source_model>
                             <sort_order>60</sort_order>
@@ -97,7 +98,7 @@
                             <can_be_empty>1</can_be_empty>
                         </payer>
                         <sender_kind translate="label">
-                            <label>Sender Kind</label>
+                            <label>Тип отправителя</label>
                             <frontend_type>select</frontend_type>
                             <source_model>ukraine/shipping_carrier_ukrposhta_source_senderkind</source_model>
                             <sort_order>70</sort_order>
@@ -107,7 +108,7 @@
                             <can_be_empty>1</can_be_empty>
                         </sender_kind>
                         <transfer_type translate="label">
-                            <label>Transfer Type</label>
+                            <label>Способ доставки</label>
                             <frontend_type>select</frontend_type>
                             <source_model>ukraine/shipping_carrier_ukrposhta_source_transfertype</source_model>
                             <sort_order>80</sort_order>
@@ -117,7 +118,7 @@
                             <can_be_empty>1</can_be_empty>
                         </transfer_type>
                         <courier translate="label">
-                            <label>Courier</label>
+                            <label>Курьер</label>
                             <frontend_type>select</frontend_type>
                             <source_model>ukraine/shipping_carrier_ukrposhta_source_courier</source_model>
                             <sort_order>90</sort_order>
@@ -127,7 +128,7 @@
                             <can_be_empty>1</can_be_empty>
                         </courier>
                         <declared_percent translate="label">
-                            <label>Declared Percent (%)</label>
+                            <label>Объявленная стоимость товара (%)</label>
                             <frontend_type>text</frontend_type>
                             <validate>validate-percents validate-zero-or-greater</validate>
                             <sort_order>100</sort_order>
@@ -136,7 +137,7 @@
                             <show_in_store>0</show_in_store>
                         </declared_percent>
                         <relative_extra_charge translate="label">
-                            <label>Relative Extra Charge (%)</label>
+                            <label>Относительная наценка (%)</label>
                             <frontend_type>text</frontend_type>
                             <validate>validate-percents validate-zero-or-greater</validate>
                             <sort_order>110</sort_order>
@@ -145,26 +146,28 @@
                             <show_in_store>0</show_in_store>
                         </relative_extra_charge>
                         <absolute_extra_charge translate="label">
-                            <label>Absolute Extra Charge (base currency)</label>
+                            <label>Абсолютная наценка</label>
                             <frontend_type>text</frontend_type>
                             <validate>validate-number validate-zero-or-greater</validate>
                             <sort_order>120</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
+                            <comment>в учётной валюте магазина</comment>
                         </absolute_extra_charge>
                         <rate translate="label">
-                            <label>Rate to UAH (for current website)</label>
+                            <label>Текущий курс по отношению к Гривне (UAH)</label>
                             <frontend_type>text</frontend_type>
                             <validate>validate-number validate-greater-than-zero</validate>
                             <sort_order>120</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
+                            <comment>в учётной валюте магазина</comment>
                         </rate>
                         <rate_info translate="button_label sandbox_button_label">
                             <label></label>
-                            <button_label>Show UAH to USD by Ukrposhta</button_label>
+                            <button_label>Показать курс Доллара (USD) к Гривне (UAH) в Укрпочте</button_label>
                             <button_url><![CDATA[http://services.ukrposhta.com/CalcUtil/Course.aspx]]></button_url>
                             <frontend_model>ukraine/adminhtml_system_config_ukrposhta_rate</frontend_model>
                             <sort_order>125</sort_order>
@@ -172,7 +175,7 @@
                             <show_in_website>1</show_in_website>
                         </rate_info>
                         <calc_api_url translate="label">
-                            <label>Calculation Gateway Url</label>
+                            <label>Адрес API для рассчёта стоимости</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>130</sort_order>
                             <show_in_default>1</show_in_default>
@@ -204,7 +207,7 @@
                             <!--<show_in_store>0</show_in_store>-->
                         <!--</default_height>-->
                         <withHanding translate="label">
-                            <label>Delivery notification (SMS)</label>
+                            <label>Уведомить получателя через SMS о доставке груза?</label>
                             <frontend_type>select</frontend_type>
                             <sort_order>170</sort_order>
                             <frontend_class>shipping-skip-hide</frontend_class>
@@ -214,7 +217,7 @@
                             <show_in_store>0</show_in_store>
                         </withHanding>
                         <packing translate="label">
-                            <label>Needed packing</label>
+                            <label>Требуется ли упаковка для посылки?</label>
                             <frontend_type>select</frontend_type>
                             <sort_order>180</sort_order>
                             <frontend_class>shipping-skip-hide</frontend_class>
@@ -224,7 +227,7 @@
                             <show_in_store>0</show_in_store>
                         </packing>
                         <withF103 translate="label">
-                            <label>With App. 103</label>
+                            <label>Требуется ли оформление формы Ф.103?</label>
                             <frontend_type>select</frontend_type>
                             <sort_order>190</sort_order>
                             <frontend_class>shipping-skip-hide</frontend_class>
@@ -234,7 +237,7 @@
                             <show_in_store>0</show_in_store>
                         </withF103>
                         <sort_order translate="label">
-                            <label>Sort Order</label>
+                            <label>Вес для упорядочивания способов доставки</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>200</sort_order>
                             <show_in_default>1</show_in_default>
@@ -242,7 +245,7 @@
                             <show_in_store>0</show_in_store>
                         </sort_order>
                         <debug translate="label">
-                            <label>Debug</label>
+                            <label>Включить режим отладки?</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>210</sort_order>
